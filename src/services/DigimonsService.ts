@@ -45,11 +45,28 @@ module DigimonsService {
         }
         return matches;
       }
-      export function getVersus(type: string): Array<DigimonI> {
+      export function getStrong(): Array<DigimonI> {
         const digimons: Array<DigimonI> = db;
         let matches: Array<DigimonI> = [];
+        let found;
         digimons.forEach((digimon) => {
-          const found = digimon.type.filter((e) => e.strongAgainst === type);
+           found = digimon.type.filter((e) => e.strongAgainst);
+          if (found.length > 0) {
+            matches.push(digimon);
+          }
+        });
+    
+        if (matches.length < 1) {
+          throw "No exists";
+        }
+        return matches;
+      }
+      export function getWeak(): Array<DigimonI> {
+        const digimons: Array<DigimonI> = db;
+        let matches: Array<DigimonI> = [];
+        let found;
+        digimons.forEach((digimon) => {
+           found = digimon.type.filter((e) => e.weakAgainst);
           if (found.length > 0) {
             matches.push(digimon);
           }

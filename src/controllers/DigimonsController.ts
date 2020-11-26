@@ -42,19 +42,18 @@ export function getByName(req: Request, res: Response) {
     }
   }
   
-  export function getVersus(req: Request, res: Response) {
-    try {
-      const weakAgainst =
-        (req.params.weakAgainst && req.params.weakAgainst) || undefined;
-      if (!weakAgainst) {
-        throw "Type Requiered";
-      }
-      const digimons = DigimonsService.getVersus(weakAgainst);
+  export function getStrong(req: Request, res: Response) {
+   
+      const digimons = DigimonsService.getStrong();
       res.status(200).json(digimons);
-    } catch (error) {
-      res.status(400).send(error);
-    }
+
   }
+  export function getWeak(req: Request, res: Response) {
+   
+    const digimons = DigimonsService.getWeak();
+    res.status(200).json(digimons);
+
+}
   export function createDigimon(req: Request, res: Response) {
     try {
       const {
