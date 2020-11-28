@@ -49,20 +49,20 @@ module PokemonService{
 
       export function getstrongOrWeak(req: Request): string {
         let fuerte="";
-        const digimon1 = req.params.digimon1 && +req.params.digimon1 || undefined;
-        const digimon2 = req.params.digimon2 && +req.params.digimon2 || undefined;
-        if(!digimon1 || !digimon2){ throw "Se requiere el codigo del digimon."}
+        const pokemon1 = req.params.digimon1 && +req.params.pokemon1 || undefined;
+        const pokemon2 = req.params.digimon2 && +req.params.pokemon2 || undefined;
+        if(!pokemon1 || !pokemon2){ throw "Se requiere el codigo del pokemon."}
     
-        let digi1_strongAgainst:any= PokemonService.get(digimon1).type[0].strongAgainst[0];
-        let digi2_strongAgainst:any= PokemonService.get(digimon2).type[0].strongAgainst[0];
+        let poke1_strongAgainst:any= PokemonService.get(pokemon1).type[0].strongAgainst[0];
+        let poke2_strongAgainst:any= PokemonService.get(pokemon2).type[0].strongAgainst[0];
     
-        let digi1_name:any = PokemonService.get(digimon1).name;
-        let digi2_name:any = PokemonService.get(digimon2).name;
+        let poke1_name:any = PokemonService.get(pokemon1).name;
+        let poke2_name:any = PokemonService.get(pokemon2).name;
     
-        if ( digi1_strongAgainst == digi2_name) {
-            fuerte =PokemonService.get(digimon1).name+ " es mas fuerte que  "+PokemonService.get(digimon2).name;
-        } else if (digi2_strongAgainst == digi1_name){
-            fuerte =PokemonService.get(digimon2).name+ " es mas fuerte que  "+PokemonService.get(digimon1).name;
+        if ( poke1_strongAgainst == poke2_name) {
+            fuerte =PokemonService.get(pokemon1).name+ " es mas fuerte que  "+PokemonService.get(pokemon2).name;
+        } else if (poke2_strongAgainst == poke1_name){
+            fuerte =PokemonService.get(pokemon2).name+ " es mas fuerte que  "+PokemonService.get(pokemon1).name;
         } else {
             fuerte ="Empate ambos tienen la misma resistencia";
         }

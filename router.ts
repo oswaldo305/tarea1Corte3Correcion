@@ -35,6 +35,6 @@ router.get("/pokemon", PokemonController.getAll);
 router.get("/pokemon/:id", PokemonController.get);
 router.get("/pokemon/name/:name", PokemonController.getByName);
 router.get("/pokemon/type/:type", PokemonController.getByType);
-router.get("/pokemon/strongorWeak/:pokemona/:pokemonb", PokemonController.getstrongOrWeak);
+router.get("/pokemon/versus/:pokemona/:pokemonb", PokemonController.getstrongOrWeak);
 router.post("/pokemon/createP", PokemonController.createPokemon);
 

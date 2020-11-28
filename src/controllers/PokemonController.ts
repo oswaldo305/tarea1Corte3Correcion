@@ -45,10 +45,10 @@ export function getByName(req: Request, res: Response) {
   export function getstrongOrWeak(req: Request, res: Response) {
     try {
 
-        // else if (DigimonsService.get(digimon2).type[0].strongAgainst+" VS "+DigimonsService.get(digimon1).name){
-        //     fuerte =DigimonsService.get(digimon2).name+ " es mas fuerte que  "+DigimonsService.get(digimon1).name;
+        // else if (PokemonService.get(digimon2).type[0].strongAgainst+" VS "+PokemonService.get(digimon1).name){
+        //     fuerte =PokemonService.get(digimon2).name+ " es mas fuerte que  "+PokemonService.get(digimon1).name;
         // }
-        // DigimonsService.get(digimon1).type[0].strongAgainst+" VS "+DigimonsService.get(digimon2).name
+        // PokemonService.get(digimon1).type[0].strongAgainst+" VS "+PokemonService.get(digimon2).name
         
         res.status(200).send( PokemonService.getstrongOrWeak(req));
     } catch (error) {
