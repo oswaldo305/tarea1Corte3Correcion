@@ -23,7 +23,7 @@ router.get('/digimons', DigimonsController.getAll);
 router.get('/digimons/:id', DigimonsController.get);
 router.get("/digimons/name/:name", DigimonsController.getByName);
 router.get("/digimons/type/:type", DigimonsController.getByType);
-router.get("/digimons/versus/:digimona/:digimonb", DigimonsController.getVersus);
+router.get("/digimons/strongorWeak/:digimon1/:digimon2", DigimonsController.getstrongOrWeak);
 router.post("/digimons/createD", DigimonsController.createDigimon);
 
 
@@ -35,6 +35,6 @@ router.get("/pokemon", PokemonController.getAll);
 router.get("/pokemon/:id", PokemonController.get);
 router.get("/pokemon/name/:name", PokemonController.getByName);
 router.get("/pokemon/type/:type", PokemonController.getByType);
-router.get("/pokemon/versus/:pokemona/:pokemonb", PokemonController.getVersus);
+router.get("/pokemon/strongorWeak/:pokemona/:pokemonb", PokemonController.getstrongOrWeak);
 router.post("/pokemon/createP", PokemonController.createPokemon);
 

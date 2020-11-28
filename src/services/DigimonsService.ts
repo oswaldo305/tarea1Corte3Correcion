@@ -1,5 +1,6 @@
 import { DigimonI } from "../interfaces/DigimonInterfaces";
 const db = require("../db/Digimons.json");
+import { Request, Response } from "express";
 const fs = require("fs");
 const json_books = fs.readFileSync("src/db/Digimons.json", "utf-8");
 const dbJ: any = JSON.parse(json_books);
@@ -42,55 +43,29 @@ module DigimonsService {
     }
     return matches;
   }
+  export function getstrongOrWeak(req: Request): string {
+    let fuerte="";
+    const digimon1 = req.params.digimon1 && +req.params.digimon1 || undefined;
+    const digimon2 = req.params.digimon2 && +req.params.digimon2 || undefined;
+    if(!digimon1 || !digimon2){ throw "Se requiere el codigo del digimon."}
 
-  export function getVersus(digimona: string, digimonb: string) {
-    const digimons: Array<DigimonI> = db;
-    const digimonaa:any[] = [];
-    const digimonbb:any[] = [];
-    const digimon2: Array<DigimonI> = digimons.filter(function (item) {
-      if(item.name.toLowerCase().indexOf(digimonb.toLowerCase()) > -1){
-        digimonbb.push(item.name);
-      }
-      return item.name.toLowerCase().indexOf(digimonb.toLowerCase()) > -1;
-    });
-    
-    const digimon1: Array<DigimonI> = digimons.filter(function (item) {
-      if(item.name.toLowerCase().indexOf(digimona.toLowerCase()) > -1){
-        digimonaa.push(item.name);
-      }
-      return item.name.toLowerCase().indexOf(digimona.toLowerCase()) > -1;
-    });
-    if (digimon1.length < 1 && digimon2.length < 1) {
-      throw "Digimon not found";
+    let digi1_strongAgainst:any= DigimonsService.get(digimon1).type[0].strongAgainst[0];
+    let digi2_strongAgainst:any= DigimonsService.get(digimon2).type[0].strongAgainst[0];
+
+    let digi1_name:any = DigimonsService.get(digimon1).name;
+    let digi2_name:any = DigimonsService.get(digimon2).name;
+
+    if ( digi1_strongAgainst == digi2_name) {
+        fuerte =DigimonsService.get(digimon1).name+ " es mas fuerte que  "+DigimonsService.get(digimon2).name;
+    } else if (digi2_strongAgainst == digi1_name){
+        fuerte =DigimonsService.get(digimon2).name+ " es mas fuerte que  "+DigimonsService.get(digimon1).name;
+    } else {
+        fuerte ="Empate ambos tienen la misma resistencia";
     }
-    const fuerte:any[] = [];
-    const debil:any[] = [];
-    const types:any[] = [];
-    const respuesta:any[] = [];
-    digimon1.forEach(digi=>{
-      digi.type.forEach(tipo=>{
-        fuerte.push(tipo.strongAgainst);
-      });
-    });
-    digimon1.forEach(digi=>{
-      digi.type.forEach(tipo=>{
-        debil.push(tipo.weakAgainst);
-      });
-    });
-    digimon2.forEach(digi=>{
-      digi.type.forEach(tipo=>{
-        types.push(tipo.name.toLowerCase());
-      });
-    });
-    if(types[0]==fuerte[0]){
-      respuesta.push(digimonaa+" is strong against: "+digimonbb);
-    }else if(types[0]==debil[0]){
-      respuesta.push(digimonaa+" is weak against: "+digimonbb);
-    }
-    return respuesta[0].toString();
-    
- 
-  }
+    return fuerte
+}
+
+  
   export function createDigimon(id: number,name: string,tName: string,tStrongAgainst: string,tWeakAgainst: string,img: string) {
     let type = [
       { name: tName, strongAgainst: tStrongAgainst, weakAgainst: tWeakAgainst },

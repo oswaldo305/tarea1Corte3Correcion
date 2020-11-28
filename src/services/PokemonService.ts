@@ -1,6 +1,7 @@
 import { PokemonI } from "../interfaces/PokemonInterfaces";
 const db = require('../db/Pokemons.json');
 const fs = require("fs");
+import { Request, Response } from "express";
 const json_books = fs.readFileSync('src/db/Pokemons.json', 'utf-8');
 const dbJ: any = JSON.parse(json_books);
 
@@ -46,57 +47,28 @@ module PokemonService{
         return matches;
       }
 
-      export function getVersus(pokemona:string,pokemonb:string){
-          const pokemons: Array<PokemonI> = db;
-          const pokemonaa:any[] = [];
-          const pokemonbb:any[] = [];
-        
-          const pokemon1: Array<PokemonI> = pokemons.filter(function (item) {
-            if(item.name.toLowerCase().indexOf(pokemona.toLowerCase()) > -1){
-              pokemonaa.push(item.name);
-            }
-            return item.name.toLowerCase().indexOf(pokemona.toLowerCase()) > -1;
-          });
-
-          const pokemon2: Array<PokemonI> = pokemons.filter(function (item) {
-            if(item.name.toLowerCase().indexOf(pokemonb.toLowerCase()) > -1){
-              pokemonbb.push(item.name);
-            }
-            return item.name.toLowerCase().indexOf(pokemonb.toLowerCase()) > -1;
-          });
-          if (pokemon1.length < 1 && pokemon2.length < 1) {
-            throw "Pokemons Not found";
-          }
-          const fuerte:any[] = [];
-          const debil:any[] = [];
-          const types:any[] = [];
-          const respuesta:any[] = [];
-          pokemon1.forEach(digi=>{
-            digi.type.forEach(tipo=>{
-              fuerte.push(tipo.strongAgainst);
-            });
-          });
-          pokemon1.forEach(digi=>{
-            digi.type.forEach(tipo=>{
-              debil.push(tipo.weakAgainst);
-            });
-          });
-          pokemon2.forEach(digi=>{
-            digi.type.forEach(tipo=>{
-              types.push(tipo.name.toLowerCase());
-            });
-          });
-          if(types[0]==fuerte[0]){
-            respuesta.push(pokemonaa+" is strong against: "+pokemonbb);
-          }else if(types[0]==debil[0]){
-            respuesta.push(pokemonaa+" is weak against: "+pokemonbb);
-          }else{
-            respuesta.push(pokemonaa+" is same against: "+pokemonbb);
-          }
-          return respuesta[0].toString();
-       
+      export function getstrongOrWeak(req: Request): string {
+        let fuerte="";
+        const digimon1 = req.params.digimon1 && +req.params.digimon1 || undefined;
+        const digimon2 = req.params.digimon2 && +req.params.digimon2 || undefined;
+        if(!digimon1 || !digimon2){ throw "Se requiere el codigo del digimon."}
+    
+        let digi1_strongAgainst:any= PokemonService.get(digimon1).type[0].strongAgainst[0];
+        let digi2_strongAgainst:any= PokemonService.get(digimon2).type[0].strongAgainst[0];
+    
+        let digi1_name:any = PokemonService.get(digimon1).name;
+        let digi2_name:any = PokemonService.get(digimon2).name;
+    
+        if ( digi1_strongAgainst == digi2_name) {
+            fuerte =PokemonService.get(digimon1).name+ " es mas fuerte que  "+PokemonService.get(digimon2).name;
+        } else if (digi2_strongAgainst == digi1_name){
+            fuerte =PokemonService.get(digimon2).name+ " es mas fuerte que  "+PokemonService.get(digimon1).name;
+        } else {
+            fuerte ="Empate ambos tienen la misma resistencia";
         }
-        
+        return fuerte
+    }
+    
       
       export function createPokemon(id:number,name: string,number:number,tName: string,tStrongAgainst: string,tWeakAgainst: string,img: string) {
         let type = [{name: tName,strongAgainst: tStrongAgainst,weakAgainst: tWeakAgainst}];

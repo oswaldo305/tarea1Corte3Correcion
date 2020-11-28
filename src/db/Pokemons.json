@@ -1,49 +1,20 @@
 [
     {
         "id": 1,
-        "number": 23,
-        "name": "Pikachu",
+        "name": "Agumón",
+        "number":23,
         "type": [
-            {
-                "name": "Osw",
-                "strongAgainst": [
-                    "yu"
-                ],
-                "weakAgainst": [
-                    "ya"
-                ]
-            }
+            { "name": "Vacuna", "strongAgainst": ["Gatomon"], "weakAgainst": ["Angemon"] }
         ],
         "img": "https://i.pinimg.com/564x/b9/2f/38/b92f3877ccd0ee9749269d5e72ad6832.jpg"
     },
     {
         "id": 2,
-        "name": "Pakuchu",
-        "number": 2,
+        "name": "Gatomón",
+        "number":24,
         "type": [
-            {
-                "name": "Osw",
-                "strongAgainst": [
-                    "Car"
-                ],
-                "weakAgainst": [
-                    "el"
-                ]
-            }
+            { "name": "Vacuna", "strongAgainst": ["Agumon"], "weakAgainst": ["Angemon"] }
         ],
         "img": "https://vignette.wikia.nocookie.net/tu-digimon/images/e/e4/Gatomon.gif/revision/latest/scale-to-width-down/300?cb=20130127193244&path-prefix=es"
-    },
-    {
-        "id": "12",
-        "name": "Pikachu",
-        "number": "Chchuwa",
-        "type": [
-            {
-                "name": "23",
-                "strongAgainst": "Tino",
-                "weakAgainst": "Tina"
-            }
-        ],
-        "img": "23.png"
     }
 ]

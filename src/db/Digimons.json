@@ -3,15 +3,7 @@
         "id": 1,
         "name": "Agumón",
         "type": [
-            {
-                "name": "Vacuna",
-                "strongAgainst": [
-                    "yu"
-                ],
-                "weakAgainst": [
-                    "ya"
-                ]
-            }
+            { "name": "Vacuna", "strongAgainst": ["Gatomón"], "weakAgainst": ["Angemon"] }
         ],
         "img": "https://i.pinimg.com/564x/b9/2f/38/b92f3877ccd0ee9749269d5e72ad6832.jpg"
     },
@@ -19,40 +11,24 @@
         "id": 2,
         "name": "Gatomón",
         "type": [
-            {
-                "name": "Vacuna",
-                "strongAgainst": [
-                    "Car"
-                ],
-                "weakAgainst": [
-                    "el"
-                ]
-            }
+            { "name": "Vacuna", "strongAgainst": ["Agumón"], "weakAgainst": ["Angemon"] }
         ],
         "img": "https://vignette.wikia.nocookie.net/tu-digimon/images/e/e4/Gatomon.gif/revision/latest/scale-to-width-down/300?cb=20130127193244&path-prefix=es"
     },
     {
-        "id": 45,
-        "name": "yopi",
+        "id": 3,
+        "name": "Angemon",
         "type": [
-            {
-                "name": "s",
-                "strongAgainst": "j",
-                "weakAgainst": "k"
-            }
+            { "name": "Vacuna", "strongAgainst": ["Agumón"], "weakAgainst": ["Bearmon"] }
         ],
-        "img": "NDJDNDJD"
+        "img": "https://static.wikia.nocookie.net/digimon/images/0/08/Angemon_b.jpg/revision/latest?cb=20130126150556&path-prefix=es"
     },
     {
-        "id": "233",
-        "name": "Oswaldichu",
+        "id": 4,
+        "name": "Bearmon",
         "type": [
-            {
-                "name": "Superman",
-                "strongAgainst": "CACTUS",
-                "weakAgainst": "Criptonita"
-            }
+            { "name": "Vacuna", "strongAgainst": ["Angemon"], "weakAgainst": ["Angemon"] }
         ],
-        "img": "123.png"
+        "img": "https://static.wikia.nocookie.net/digimon/images/2/20/Bearmon_b.jpg/revision/latest?cb=20120222140911&path-prefix=es"
     }
 ]

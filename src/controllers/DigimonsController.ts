@@ -41,20 +41,19 @@ export function getByName(req: Request, res: Response) {
       res.status(400).send(error);
     }
   }
-  export function getVersus(req: Request, res: Response) {
+  export function getstrongOrWeak(req: Request, res: Response) {
     try {
-      const digimona = (req.params.digimona && req.params.digimona) || undefined;
-      const digimonb = (req.params.digimonb && req.params.digimonb) || undefined;
-      if (!digimona || !digimonb) {
-        throw "Error, Data Not found";
-      }
-      const digimons = DigimonsService.getVersus(digimona, digimonb);
-      res.status(200).json(digimons.toString());
+
+        // else if (DigimonsService.get(digimon2).type[0].strongAgainst+" VS "+DigimonsService.get(digimon1).name){
+        //     fuerte =DigimonsService.get(digimon2).name+ " es mas fuerte que  "+DigimonsService.get(digimon1).name;
+        // }
+        // DigimonsService.get(digimon1).type[0].strongAgainst+" VS "+DigimonsService.get(digimon2).name
+        
+        res.status(200).send( DigimonsService.getstrongOrWeak(req));
     } catch (error) {
-      res.status(400).send(error);
+        res.status(400).send(error);
     }
-  }
-  
+}
  
   
   export function createDigimon(req: Request, res: Response) {
