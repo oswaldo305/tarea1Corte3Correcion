@@ -1,11 +1,8 @@
 import { PokemonI } from "../interfaces/PokemonInterfaces";
-
 const db = require('../db/Pokemons.json');
-const idDefect=3;
-const idRandom = idDefect+1;
 const fs = require("fs");
 const json_books = fs.readFileSync('src/db/Pokemons.json', 'utf-8');
-const datos: any = JSON.parse(json_books);
+const dbJ: any = JSON.parse(json_books);
 
 module PokemonService{
 
@@ -49,60 +46,68 @@ module PokemonService{
         return matches;
       }
 
-      export function createPokemon(
-        name: string,
-        tName: string,
-        tStrongAgainst: string,
-        tWeakAgainst: string,
-        img: string
-      ) {
-        let type = {
-          name: tName,
-          strongAgainst: tStrongAgainst,
-          weakAgainst: tWeakAgainst,
-        };
-        let newPoke = {
-          id: idRandom, name, type, img,
-        };
-        datos.save(newPoke);
-    
-        const json_books = JSON.stringify(datos);
-        fs.writeFileSync("src/db/Pokemons.json", json_books, "utf-8");
-    
-        return "Poke created";
-      }
-      export function getStrong(): Array<PokemonI> {
-        const pokemons: Array<PokemonI> = db;
-        let matches: Array<PokemonI> = [];
-        let found;
-        pokemons.forEach((pokemon) => {
-           found = pokemon.type.filter((e) => e.strongAgainst);
-          if (found.length > 0) {
-            matches.push(pokemon);
-          }
-        });
-    
-        if (matches.length < 1) {
-          throw "No exists";
-        }
-        return matches;
-      }
-      export function getWeak(): Array<PokemonI> {
-        const pokemons: Array<PokemonI> = db;
-        let matches: Array<PokemonI> = [];
-        let found;
-        pokemons.forEach((pokemon) => {
-           found = pokemon.type.filter((e) => e.weakAgainst);
-          if (found.length > 0) {
-            matches.push(pokemon);
-          }
-        });
-    
-        if (matches.length < 1) {
-          throw "No exists";
-        }
-        return matches;
-      }
+      export function getVersus(pokemona:string,pokemonb:string){
+          const pokemons: Array<PokemonI> = db;
+          const pokemonaa:any[] = [];
+          const pokemonbb:any[] = [];
+        
+          const pokemon1: Array<PokemonI> = pokemons.filter(function (item) {
+            if(item.name.toLowerCase().indexOf(pokemona.toLowerCase()) > -1){
+              pokemonaa.push(item.name);
+            }
+            return item.name.toLowerCase().indexOf(pokemona.toLowerCase()) > -1;
+          });
 
-}
-export default PokemonService;
+          const pokemon2: Array<PokemonI> = pokemons.filter(function (item) {
+            if(item.name.toLowerCase().indexOf(pokemonb.toLowerCase()) > -1){
+              pokemonbb.push(item.name);
+            }
+            return item.name.toLowerCase().indexOf(pokemonb.toLowerCase()) > -1;
+          });
+          if (pokemon1.length < 1 && pokemon2.length < 1) {
+            throw "Pokemons Not found";
+          }
+          const fuerte:any[] = [];
+          const debil:any[] = [];
+          const types:any[] = [];
+          const respuesta:any[] = [];
+          pokemon1.forEach(digi=>{
+            digi.type.forEach(tipo=>{
+              fuerte.push(tipo.strongAgainst);
+            });
+          });
+          pokemon1.forEach(digi=>{
+            digi.type.forEach(tipo=>{
+              debil.push(tipo.weakAgainst);
+            });
+          });
+          pokemon2.forEach(digi=>{
+            digi.type.forEach(tipo=>{
+              types.push(tipo.name.toLowerCase());
+            });
+          });
+          if(types[0]==fuerte[0]){
+            respuesta.push(pokemonaa+" is strong against: "+pokemonbb);
+          }else if(types[0]==debil[0]){
+            respuesta.push(pokemonaa+" is weak against: "+pokemonbb);
+          }else{
+            respuesta.push(pokemonaa+" is same against: "+pokemonbb);
+          }
+          return respuesta[0].toString();
+       
+        }
+        
+      
+      export function createPokemon(id:number,name: string,number:number,tName: string,tStrongAgainst: string,tWeakAgainst: string,img: string) {
+        let type = [{name: tName,strongAgainst: tStrongAgainst,weakAgainst: tWeakAgainst}];
+        let cPokemon = {id,name,number,type, img};
+        dbJ.push(cPokemon);
+        const json_books = JSON.stringify(dbJ);
+        fs.writeFileSync("src/db/Pokemons.json", json_books, "utf-8");
+        return "Poke Succefully Created";
+      }
+  
+    
+    }
+    export default PokemonService;
+

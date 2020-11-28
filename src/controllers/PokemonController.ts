@@ -41,32 +41,30 @@ export function getByName(req: Request, res: Response) {
       res.status(400).send(error);
     }
   }
+  export function getVersus(req: Request, res: Response) {
+    try {
+      const pokemona = (req.params.pokemona && req.params.pokemona) || undefined;
+      const pokemonb = (req.params.pokemonb && req.params.pokemonb) || undefined;
+      if (!pokemona || !pokemonb) {
+        throw "SError, Data Not found";
+      }
+      const pokemons = PokemonService.getVersus(pokemona, pokemonb);
+      res.status(200).json(pokemons.toString().replace(/['"]+/g, ''));
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
   export function createPokemon(req: Request, res: Response) {
     try {
-      const {
-        name, tName, tStrongAgainst, tWeakAgainst, img,
-      } = req.body;
-      if (!name || !tName || !tStrongAgainst || !tWeakAgainst || !img) {
-        throw "Type data";
+      const {id, name, number, tName, tStrongAgainst, tWeakAgainst, img} = req.body;
+      if (!id || !name || !number ||!tName || !tStrongAgainst || !tWeakAgainst || !img) {
+        throw "Error, Missing data";
       }
-      const pokemons = PokemonService.createPokemon(
-        name, tName, tStrongAgainst, tWeakAgainst, img
-      );
+      const pokemons = PokemonService.createPokemon(id,name, number, tName, tStrongAgainst, tWeakAgainst, img);
   
       res.status(200).json(pokemons);
     } catch (error) {
       res.status(400).send(error);
     }
   }
-  export function getStrong(req: Request, res: Response) {
-   
-    const pokemons = PokemonService.getStrong();
-    res.status(200).json(pokemons);
-
-}
-export function getWeak(req: Request, res: Response) {
- 
-  const pokemons = PokemonService.getWeak();
-  res.status(200).json(pokemons);
-
-}
+  

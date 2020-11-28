@@ -9,7 +9,7 @@ export function getAll(_: any, res: Response) {
 export function get(req: Request, res: Response) {
     try {
         const id = req.params.id && +req.params.id || undefined;
-        if(!id){ throw "Se requiere el ID del digimon."}
+        if(!id){ throw "Se requiere el idd del digimon."}
         const digimon = DigimonsService.get(id);
         res.status(200).json(digimon);
     } catch (error) {
@@ -41,31 +41,30 @@ export function getByName(req: Request, res: Response) {
       res.status(400).send(error);
     }
   }
-  
-  export function getStrong(req: Request, res: Response) {
-   
-      const digimons = DigimonsService.getStrong();
-      res.status(200).json(digimons);
-
+  export function getVersus(req: Request, res: Response) {
+    try {
+      const digimona = (req.params.digimona && req.params.digimona) || undefined;
+      const digimonb = (req.params.digimonb && req.params.digimonb) || undefined;
+      if (!digimona || !digimonb) {
+        throw "Error, Data Not found";
+      }
+      const digimons = DigimonsService.getVersus(digimona, digimonb);
+      res.status(200).json(digimons.toString());
+    } catch (error) {
+      res.status(400).send(error);
+    }
   }
-  export function getWeak(req: Request, res: Response) {
-   
-    const digimons = DigimonsService.getWeak();
-    res.status(200).json(digimons);
-
-}
+  
+ 
+  
   export function createDigimon(req: Request, res: Response) {
     try {
-      const {
-        name, tName, tStrongAgainst, tWeakAgainst, img,
-      } = req.body;
-      if (!name || !tName || !tStrongAgainst || !tWeakAgainst || !img) {
-        throw "Type data";
+      const {id, name, tName, tStrongAgainst, tWeakAgainst, img} = req.body;
+      if (!id ||!name || !tName || !tStrongAgainst || !tWeakAgainst || !img) {
+        throw "Error, Missing Data";
       }
-      const digimons = DigimonsService.createDigimon(
-        name, tName, tStrongAgainst, tWeakAgainst, img
-      );
-  
+      const digimons = DigimonsService.createDigimon(id,name, tName, tStrongAgainst, tWeakAgainst, img);
+      console.log(digimons);
       res.status(200).json(digimons);
     } catch (error) {
       res.status(400).send(error);
